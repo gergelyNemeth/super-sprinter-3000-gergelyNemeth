@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-    <title>Super Sprinter 3000</title>
+    <head>
+        <title>Super Sprinter 3000</title>
+    </head>
     <body>
-        <h1>User Story Manager</h1>
-        <a href="/story">
-            <button>Add New User Story</button>
-        </a>
-        
+        <h2>User Story Manager</h2>
+        <button type="button" class="btn" onclick="window.location.href='/story'">Add New User Story</button>
+        <p></p>
         <table border="1">
             {% for i, line in enumerate(data) %}
             <tr>
