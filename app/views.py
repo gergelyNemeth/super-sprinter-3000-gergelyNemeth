@@ -1,4 +1,5 @@
 from flask import render_template, Markup, flash, request, redirect, url_for
+from time import sleep
 from app import app
 
 app.secret_key = '4de2eacfb1fb2f93791c05884568805794874daef98bffaf'
@@ -57,5 +58,4 @@ def add_story():
             return redirect(url_for("story"))
         else:
             write_data(data)
-            flash("Data saved")
             return redirect(url_for("list_page"))
