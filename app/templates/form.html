@@ -18,14 +18,14 @@
             <label for="business_value">Business Value</label><br>
             <select name="business_value" id="business_value">
                 {% for i in range(100, 1600, 100) %}
-                    <option value="{{ i }}">{{ i  }}</option>
+                    <option value="{{ i }}">{{ i }}</option>
                 {% endfor %}
             </select><br><br>
 
             <label for="estimation">Estimation</label><br>
             <select name="estimation" id="estimation">
                 {% for i in range(1, 81) %}
-                    <option value="{{ i/2 }}h">{{ i/2  }}h</option>
+                    <option value="{{ i/2 }}h">{{ i/2 }}h</option>
                 {% endfor %}
             </select><br><br>
 
@@ -36,7 +36,7 @@
                 {% endfor %}
             </select><br><br>
             
-            <input type="submit" value="Submit">
+            <input type="submit" value="Create">
 
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
