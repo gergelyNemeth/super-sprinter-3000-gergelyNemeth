@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Super Sprinter 3000 - Add New Story</title>
+    </head>
+    <body>
+        <h2>User Story Manager - Add New Story</h2>
+        <form action="{{ url_for('add_story') }}" method="post" role="form">
+            <label for="story_title">Story Title</label><br>
+            <input type="text" name="story_title" size="48"><br><br>
+
+            <label for="user_story">User Story</label><br>
+            <textarea rows="4" cols="47" name="user_story"></textarea><br><br>
+
+            <label for="acceptance_criteria">Acceptance Criteria</label><br>
+            <textarea rows="4" cols="47" name="acceptance_criteria"></textarea><br><br>
+
+            <label for="business_value">Business Value</label><br>
+            <select name="business_value" id="business_value">
+                {% for i in range(100, 1600, 100) %}
+                    <option value="{{ i }}">{{ i  }}</option>
+                {% endfor %}
+            </select><br><br>
+
+            <label for="estimation">Estimation (h)</label><br>
+            <select name="estimation" id="estimation">
+                {% for i in range(1, 81) %}
+                    <option value="{{ i/2 }}h">{{ i/2  }}h</option>
+                {% endfor %}
+            </select><br><br>
+
+            <label for="status">Status</label><br>
+            <select name="status" id="status">
+                {% for status in status_list %}
+                    <option value="{{ status }}">{{ status  }}</option>
+                {% endfor %}
+            </select><br><br>
+            
+            <input type="submit" value="Submit">
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+
+        </form>
+    </body>
+</html>
