@@ -9,15 +9,15 @@
         <p></p>
         <table border="1">
             {% for i, line in enumerate(data) %}
-            <tr>
-                {% for field in line %}
-                {% if i == 0 %}
-                <th>{{ field }}</th>
-                {% else %}
-                <td>{{ field }}</td>
-                {% endif %}
-                {% endfor %}
-            </tr>
+                <tr>
+                    {% for field in line %}
+                        {% if i == 0 %}
+                            <th>{{ field }}</th>
+                        {% else %}
+                            <td>{{ field }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
             {% endfor %}
         </table>
        
