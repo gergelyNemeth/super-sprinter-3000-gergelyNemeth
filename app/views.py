@@ -25,7 +25,7 @@ def read_data(story_id=None):
     return data
 
 
-def write_data(new_data, story_id=None):
+def write_data(new_data, story_id=None, delete=False):
     data = read_data()
     if not story_id:
         for line in data:
@@ -39,16 +39,23 @@ def write_data(new_data, story_id=None):
             f.write(new_line)
     else:
         for line in data:
-            if line[0] == str(story_id):
-                new_data_copy = []
-                for field in new_data:
-                    field = field.replace("\r\n", "\\n")
-                    new_data_copy.append(field)
-                joined_line = "{};{}".format(story_id, ";".join(new_data_copy))
+            if delete and line[0] == str(story_id):
+                data.remove(line)
+                print(data)
+                continue
+            if line[0] == str(story_id) and not delete:
+                joined_line = "{};{}".format(story_id, ";".join(new_data))
             else:
                 joined_line = ";".join(line)
             data[data.index(line)] = joined_line
-        data = "\n".join(data)
+        fixed_data = []
+        print(data)
+        for line in data:
+            if isinstance(line, (list)):
+                line = ";".join(line)
+            line = line.replace("\r\n", "\\n").replace("<br>", "\\n")
+            fixed_data.append(line)
+        data = "\n".join(fixed_data)
         with open("app/data.csv", mode='w') as f:
             f.write(data)
 
@@ -103,3 +110,10 @@ def update_story(story_id):
 
     return render_template('form.html', story_id=story_id, status_list=status_list,
                            data=data_update, int=int, float=float)
+
+
+@app.route('/story/<story_id>/delete')
+def delete_story(story_id):
+    data = read_data(story_id)
+    write_data(data, story_id, delete=True)
+    return redirect(url_for("list_page"))
