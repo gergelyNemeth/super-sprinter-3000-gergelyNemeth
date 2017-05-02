@@ -7,13 +7,13 @@
         <h2>User Story Manager - Add New Story</h2>
         <form action="{{ url_for('add_story') }}" method="post" role="form">
             <label for="story_title">Story Title</label><br>
-            <input type="text" name="story_title" size="48"><br><br>
+            <input type="text" name="story_title" id="story_title" size="48"><br><br>
 
             <label for="user_story">User Story</label><br>
-            <textarea rows="4" cols="47" name="user_story"></textarea><br><br>
+            <textarea rows="4" cols="47" name="user_story" id="user_story"></textarea><br><br>
 
             <label for="acceptance_criteria">Acceptance Criteria</label><br>
-            <textarea rows="4" cols="47" name="acceptance_criteria"></textarea><br><br>
+            <textarea rows="4" cols="47" name="acceptance_criteria" id="acceptance_criteria"></textarea><br><br>
 
             <label for="business_value">Business Value</label><br>
             <select name="business_value" id="business_value">
