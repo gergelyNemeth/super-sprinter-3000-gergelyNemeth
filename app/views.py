@@ -26,6 +26,7 @@ def read_data(story_id=None):
 
 
 def write_data(new_data, story_id=None, delete=False):
+    new_data = fix_newline(new_data)
     data = read_data()
     if not story_id:
         for line in data:
@@ -38,26 +39,34 @@ def write_data(new_data, story_id=None, delete=False):
         with open("app/data.csv", mode='a') as f:
             f.write(new_line)
     else:
+        data_updated = []
         for line in data:
             if delete and line[0] == str(story_id):
-                data.remove(line)
-                print(data)
                 continue
             if line[0] == str(story_id) and not delete:
                 joined_line = "{};{}".format(story_id, ";".join(new_data))
             else:
                 joined_line = ";".join(line)
-            data[data.index(line)] = joined_line
-        fixed_data = []
-        print(data)
-        for line in data:
-            if isinstance(line, (list)):
-                line = ";".join(line)
-            line = line.replace("\r\n", "\\n").replace("<br>", "\\n")
-            fixed_data.append(line)
-        data = "\n".join(fixed_data)
+            data_updated.append(joined_line)
+        data = "\n".join(data_updated)
+        data = fix_newline(data)
         with open("app/data.csv", mode='w') as f:
             f.write(data)
+
+
+def fix_newline(data):
+    fixed_data = []
+    if isinstance(data, (list)):
+        for line in data:
+            if isinstance(line, (list)):
+                for field in line:
+                    field.replace("\r\n", "\\n").replace("<br>", "\\n")
+            else:
+                line = line.replace("\r\n", "\\n").replace("<br>", "\\n")
+            fixed_data.append(line)
+    else:
+        fixed_data = data.replace("\r\n", "\\n").replace("<br>", "\\n")
+    return fixed_data
 
 
 @app.route('/')
