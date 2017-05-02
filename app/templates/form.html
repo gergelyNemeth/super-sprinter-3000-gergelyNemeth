@@ -5,38 +5,59 @@
     </head>
     <body>
         <h2>User Story Manager - Add New Story</h2>
-        <form action="{{ url_for('add_story') }}" method="post" role="form">
+        
+        {% if not data[0] %}
+        <form action="{{ url_for('story') }}" method="post" role="form">
+        {% else %}
+        <form action="{{ url_for('update_story', story_id=story_id) }}" method="post" role="form">
+        {% endif %}
+
             <label for="story_title">Story Title</label><br>
-            <input type="text" name="story_title" id="story_title" size="48"><br><br>
+            <input type="text" name="story_title" id="story_title" size="48" value="{{ data[1] }}"><br><br>
 
             <label for="user_story">User Story</label><br>
-            <textarea rows="4" cols="47" name="user_story" id="user_story"></textarea><br><br>
+            <textarea rows="4" cols="47" name="user_story" id="user_story">{{ data[2] }}</textarea><br><br>
 
             <label for="acceptance_criteria">Acceptance Criteria</label><br>
-            <textarea rows="4" cols="47" name="acceptance_criteria" id="acceptance_criteria"></textarea><br><br>
+            <textarea rows="4" cols="47" name="acceptance_criteria" id="acceptance_criteria">{{ data[3] }}</textarea><br><br>
 
             <label for="business_value">Business Value</label><br>
-            <select name="business_value" id="business_value">
+            <select name="business_value" id="business_value" value=" {{ data[4] }}">
                 {% for i in range(100, 1600, 100) %}
-                    <option value="{{ i }}">{{ i }}</option>
+                    {% if i == int(data[4]) %}
+                        <option selected value="{{ i }}">{{ i }}</option>
+                    {% else %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endif %}
                 {% endfor %}
             </select><br><br>
 
             <label for="estimation">Estimation</label><br>
             <select name="estimation" id="estimation">
                 {% for i in range(1, 81) %}
-                    <option value="{{ i/2 }}h">{{ i/2 }}h</option>
+                    {% if i/2 == float(data[5][:-1]) %}
+                        <option selected value="{{ i/2 }}h">{{ i/2 }}h</option>
+                    {% else %}
+                        <option value="{{ i/2 }}h">{{ i/2 }}h</option>
+                    {% endif %}
                 {% endfor %}
             </select><br><br>
 
             <label for="status">Status</label><br>
             <select name="status" id="status">
                 {% for status in status_list %}
-                    <option value="{{ status }}">{{ status  }}</option>
+                    {% if i == data[6] %}
+                        <option selected value="{{ status }}">{{ status  }}</option>
+                    {% else %}
+                        <option value="{{ status }}">{{ status  }}</option>
+                    {% endif %}
                 {% endfor %}
             </select><br><br>
-            
-            <input type="submit" value="Create">
+            {% if data[0] == 0 %}
+                <input type="submit" value="Create">
+            {% else %}
+                <input type="submit" value="Update">
+            {% endif %}
 
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
