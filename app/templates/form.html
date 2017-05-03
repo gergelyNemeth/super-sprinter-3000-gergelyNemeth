@@ -17,7 +17,7 @@
         {% if not data[0] %}
         <form action="{{ url_for('story') }}" method="post" role="form">
         {% else %}
-        <form action="{{ url_for('update_story', story_id=story_id) }}" method="post" role="form">
+        <form action="{{ url_for('story', story_id=story_id) }}" method="post" role="form">
         {% endif %}
 
             <label for="story_title">Story Title</label><br>

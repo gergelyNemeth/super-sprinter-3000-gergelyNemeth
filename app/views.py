@@ -94,31 +94,8 @@ def list_page():
 
 
 @app.route('/story', methods=["GET", "POST"])
-def story():
-    if request.method == "POST":
-        story_title = request.form["story_title"]
-        user_story = request.form["user_story"]
-        acceptance_criteria = request.form["acceptance_criteria"]
-        business_value = request.form["business_value"]
-        estimation = request.form["estimation"]
-        status = request.form["status"]
-        data = [story_title, user_story, acceptance_criteria, business_value, estimation, status]
-        if "" in data:
-            flash("All fields required")
-            return redirect(url_for("story"))
-        else:
-            write_data(data)
-            return redirect(url_for("list_page"))
-
-    status_list = ["Planning", "TODO", "In Progress", "Review", "Done"]
-    data = [0, "", "", "", 0, "0h", ""]
-    return render_template('form.html', status_list=status_list, data=data, int=int, float=float)
-
-
 @app.route('/story/<story_id>', methods=["GET", "POST"])
-def update_story(story_id):
-    status_list = ["Planning", "TODO", "In Progress", "Review", "Done"]
-    data_update = read_data(story_id)
+def story(story_id=None):
     if request.method == "POST":
         story_title = request.form["story_title"]
         user_story = request.form["user_story"]
@@ -129,12 +106,21 @@ def update_story(story_id):
         data = [story_title, user_story, acceptance_criteria, business_value, estimation, status]
         if "" in data:
             flash("All fields required")
-            return redirect(url_for("story/<story_id>"))
+            if story_id:
+                return redirect(url_for("story/<story_id>"))
+            else:
+                return redirect(url_for("story"))
         else:
             write_data(data, story_id)
             return redirect(url_for("list_page"))
+
+    status_list = ["Planning", "TODO", "In Progress", "Review", "Done"]
+    if story_id:
+        data = read_data(story_id)
+    else:
+        data = [0, "", "", "", 0, "0h", ""]
     return render_template('form.html', story_id=story_id, status_list=status_list,
-                           data=data_update, int=int, float=float)
+                           data=data, int=int, float=float)
 
 
 @app.route('/story/<story_id>/delete')
