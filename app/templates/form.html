@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Super Sprinter 3000 - Add New Story</title>
+        {% if not data[0] %}
+            <title>Super Sprinter 3000 - Add New Story</title>
+        {% else %}
+            <title>Super Sprinter 3000 - Edit Story</title>
+        {% endif %}
     </head>
     <body>
-        <h2>User Story Manager - Add New Story</h2>
-        
+        {% if not data[0] %}
+            <h2>User Story Manager - Add New Story</h2>
+        {% else %}
+            <h2>User Story Manager - Edit Story</h2>
+        {% endif %}
+
         {% if not data[0] %}
         <form action="{{ url_for('story') }}" method="post" role="form">
         {% else %}
@@ -53,10 +61,11 @@
                     {% endif %}
                 {% endfor %}
             </select><br><br>
+
             {% if data[0] == 0 %}
-                <input type="submit" value="Create">
+                <input type="submit" id="create" value="Create">
             {% else %}
-                <input type="submit" value="Update">
+                <input type="submit" id="update" value="Update">
             {% endif %}
 
             {% with messages = get_flashed_messages() %}
