@@ -1,21 +1,27 @@
 from flask import render_template, Markup, flash, request, redirect, url_for
-from time import sleep
 from app import app
 
 app.secret_key = '4de2eacfb1fb2f93791c05884568805794874daef98bffaf'
 
 
 def read_data(story_id=None):
+    """Read the data.csv file and convert it to list.
+
+    If story_id is None, give back the whole list.
+    Else read only the row with the given ID.
+    """
     with open("app/data.csv") as f:
         data = []
         for line in f.read().split("\n"):
             data_line = []
+            # Data for listing the whole table
             if not story_id:
                 for field in line.split(';'):
                     if "\\n" in field:
                         field = Markup(field.replace("\\n", "<br>"))
                     data_line.append(field)
                 data.append(data_line)
+            # Data for editing the given row in the table
             else:
                 if line[0] == str(story_id):
                     for field in line.split(';'):
@@ -27,8 +33,16 @@ def read_data(story_id=None):
 
 
 def write_data(new_data, story_id=None, delete=False):
+    """Store data into the data.csv file.
+
+    If story_is is None, append the new_data to the end of the table.
+    Else update only the row with the given ID.
+
+    If delete is True, delete the row with the given ID.
+    """
     new_data = fix_newline(new_data)
     data = read_data()
+    # Append new data to the end of the table
     if not story_id:
         for line in data:
             max_id = line[0]
@@ -39,6 +53,7 @@ def write_data(new_data, story_id=None, delete=False):
         new_line = "\n{};{}".format(new_id, ";".join(new_data))
         with open("app/data.csv", mode='a') as f:
             f.write(new_line)
+    # Update only the row with the given ID
     else:
         data_updated = []
         for line in data:
@@ -56,6 +71,7 @@ def write_data(new_data, story_id=None, delete=False):
 
 
 def fix_newline(data):
+    """Convert newlines and line breaks to characters in the given string or list of strings."""
     fixed_data = []
     if isinstance(data, (list)):
         for line in data:
