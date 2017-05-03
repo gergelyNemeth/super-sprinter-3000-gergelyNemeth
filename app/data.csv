@@ -1,2 +1,1 @@
-ID;Story Title;User Story;Acceptance Criteria;Business Value;Estimation;Status
 1;System / Handle new Application;As an Administrator,\nI want to automate the process of incoming applications. So that I can save time.;Given, that there is an applicant, and it has no application code\nWhen the system detects this new entry...;1000;12h;In Progress

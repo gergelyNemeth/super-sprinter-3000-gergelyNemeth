@@ -13,22 +13,23 @@ def read_data(story_id=None):
     with open("app/data.csv") as f:
         data = []
         for line in f.read().split("\n"):
-            data_line = []
-            # Data for listing the whole table
-            if not story_id:
-                for field in line.split(';'):
-                    if "\\n" in field:
-                        field = Markup(field.replace("\\n", "<br>"))
-                    data_line.append(field)
-                data.append(data_line)
-            # Data for editing the given row in the table
-            else:
-                if line[0] == str(story_id):
+            if line != "":
+                data_line = []
+                # Data for listing the whole table
+                if not story_id:
                     for field in line.split(';'):
                         if "\\n" in field:
-                            field = Markup(field.replace("\\n", "\r\n"))
+                            field = Markup(field.replace("\\n", "<br>"))
                         data_line.append(field)
-                    data = data_line
+                    data.append(data_line)
+                # Data for editing the given row in the table
+                else:
+                    if line[0] == str(story_id):
+                        for field in line.split(';'):
+                            if "\\n" in field:
+                                field = Markup(field.replace("\\n", "\r\n"))
+                            data_line.append(field)
+                        data = data_line
     return data
 
 
@@ -44,9 +45,10 @@ def write_data(new_data, story_id=None, delete=False):
     data = read_data()
     # Append new data to the end of the table
     if not story_id:
+        max_id = 0
         for line in data:
             max_id = line[0]
-        if str(max_id) == "ID":
+        if str(max_id) == 0:
             new_id = 1
         else:
             new_id = int(max_id) + 1
@@ -90,7 +92,8 @@ def fix_newline(data):
 @app.route('/list')
 def list_page():
     data = read_data()
-    return render_template('list.html', data=data, enumerate=enumerate)
+    table_header = ["ID", "Story Title", "User Story", "Acceptance Criteria", "Business Value", "Estimation", "Status"]
+    return render_template('list.html', data=data, table_header=table_header, enumerate=enumerate)
 
 
 @app.route('/story', methods=["GET", "POST"])

@@ -8,16 +8,17 @@
         <button type="button" class="btn" id="add_new_story" onclick="window.location.href='/story'">Add New User Story</button>
         <p></p>
         <table border="1">
+            <tr>
+                {% for field in table_header %}
+                    <th>{{ field }}</th>
+                {% endfor %}
+            </tr>
             {% for i, line in enumerate(data) %}
                 <tr>
                     {% for field in line %}
-                        {% if i == 0 %}
-                            <th>{{ field }}</th>
-                        {% else %}
-                            <td>{{ field }}</td>
-                        {% endif %}
+                        <td>{{ field }}</td>
                     {% endfor %}
-                    {% if i != 0 %}
+                    {% if line[0] %}
                         <td>
                             <a href="/story/{{ line[0] }}"><img src="../static/pen.png" width="20" height="20" alt="Pen icon"></a> 
                         </td>
