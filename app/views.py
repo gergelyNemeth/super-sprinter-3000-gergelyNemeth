@@ -17,11 +17,12 @@ def read_data(story_id=None):
                     data_line.append(field)
                 data.append(data_line)
             else:
-                for field in line.split(';'):
-                    if line[0] == str(story_id):
-                        field = Markup(field.replace("\\n", "&#13;&#10;"))
+                if line[0] == str(story_id):
+                    for field in line.split(';'):
+                        if "\\n" in field:
+                            field = Markup(field.replace("\\n", "\r\n"))
                         data_line.append(field)
-                data = data_line
+                    data = data_line
     return data
 
 
@@ -116,7 +117,6 @@ def update_story(story_id):
         else:
             write_data(data, story_id)
             return redirect(url_for("list_page"))
-
     return render_template('form.html', story_id=story_id, status_list=status_list,
                            data=data_update, int=int, float=float)
 
