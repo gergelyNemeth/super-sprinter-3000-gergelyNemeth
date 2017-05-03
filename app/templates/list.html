@@ -9,23 +9,23 @@
         <p></p>
         <table border="1">
             <tr>
-                {% for field in table_header %}
-                    <th>{{ field }}</th>
-                {% endfor %}
+            {% for field in table_header %}
+                <th>{{ field }}</th>
+            {% endfor %}
             </tr>
             {% for i, line in enumerate(data) %}
                 <tr>
-                    {% for field in line %}
-                        <td>{{ field }}</td>
-                    {% endfor %}
-                    {% if line[0] %}
-                        <td>
-                            <a href="/story/{{ line[0] }}"><img src="../static/pen.png" width="20" height="20" alt="Pen icon"></a> 
-                        </td>
-                        <td>
-                            <a href="/story/{{ line[0] }}/delete"><img src="../static/bin.jpg" width="20" height="20" alt="Bin icon"></a>
-                        </td>
-                    {% endif %}
+                {% for field in line %}
+                    <td>{{ field }}</td>
+                {% endfor %}
+                {% if line[0] %}
+                    <td>
+                        <a href="/story/{{ line[0] }}"><img src="../static/pen.png" width="20" height="20" alt="Pen icon"></a> 
+                    </td>
+                    <td>
+                        <a href="/story/{{ line[0] }}/delete"><img src="../static/bin.jpg" width="20" height="20" alt="Bin icon"></a>
+                    </td>
+                {% endif %}
                 </tr>
             {% endfor %}
         </table>
