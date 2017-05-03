@@ -8,15 +8,12 @@
         {% endif %}
     </head>
     <body>
-        {% if not data[0] %}
-            <h2>User Story Manager - Add New Story</h2>
-        {% else %}
-            <h2>User Story Manager - Edit Story</h2>
-        {% endif %}
 
         {% if not data[0] %}
+        <h2>User Story Manager - Add New Story</h2>
         <form action="{{ url_for('story') }}" method="post" role="form">
         {% else %}
+        <h2>User Story Manager - Edit Story</h2>
         <form action="{{ url_for('story', story_id=story_id) }}" method="post" role="form">
         {% endif %}
 
