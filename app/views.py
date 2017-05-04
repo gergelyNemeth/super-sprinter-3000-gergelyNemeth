@@ -36,7 +36,7 @@ def read_data(story_id=None):
 def write_data(new_data, story_id=None, delete=False):
     """Store data into the data.csv file.
 
-    If story_is is None, append the new_data to the end of the table.
+    If story_id is None, append the new_data to the end of the table.
     Else update only the row with the given ID.
 
     If delete is True, delete the row with the given ID.
@@ -47,13 +47,13 @@ def write_data(new_data, story_id=None, delete=False):
     if not story_id:
         max_id = 0
         for line in data:
-            max_id = line[0]
-        if str(max_id) == 0:
-            new_id = 1
-        else:
-            new_id = int(max_id) + 1
-        new_line = "\n{};{}".format(new_id, ";".join(new_data))
-        with open("app/data.csv", mode='a') as f:
+            if line != "":
+                max_id = line[0]
+        new_id = int(max_id) + 1
+        new_line = "{};{}".format(new_id, ";".join(new_data))
+        if new_id != 1:
+            new_line = "\n" + new_line
+        with open("app/data.csv", mode="a") as f:
             f.write(new_line)
     # Update only the row with the given ID
     else:
