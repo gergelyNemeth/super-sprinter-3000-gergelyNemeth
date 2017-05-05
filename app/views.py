@@ -9,6 +9,8 @@ def read_data(story_id=None):
 
     If story_id is None, give back the whole list.
     Else read only the row with the given ID.
+
+    Convert all escaped newlines to display it properly.
     """
     with open("app/data.csv") as f:
         data = []
@@ -73,7 +75,7 @@ def write_data(new_data, story_id=None, delete=False):
 
 
 def fix_newline(data):
-    """Convert newlines and line breaks to characters in the given string or list of strings."""
+    """Convert newlines and line breaks back to escaped newline in the given string or list of strings."""
     fixed_data = []
     if isinstance(data, (list)):
         for line in data:
@@ -121,7 +123,7 @@ def story(story_id=None):
     if story_id:
         data = read_data(story_id)
     else:
-        data = [0, "", "", "", 0, "0h", ""]
+        data = [0, "", "", "", "0", "0h", ""]
     return render_template('form.html', story_id=story_id, status_list=status_list,
                            data=data, int=int, float=float)
 
