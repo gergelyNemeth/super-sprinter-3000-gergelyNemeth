@@ -112,7 +112,7 @@ def story(story_id=None):
         if "" in data:
             flash("All fields required")
             if story_id:
-                return redirect(url_for("story/<story_id>"))
+                return redirect(url_for("story", story_id=story_id))
             else:
                 return redirect(url_for("story"))
         else:
