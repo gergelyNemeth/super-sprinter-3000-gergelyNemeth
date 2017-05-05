@@ -7,10 +7,10 @@ app.secret_key = '4de2eacfb1fb2f93791c05884568805794874daef98bffaf'
 def read_data(story_id=None):
     """Read the data.csv file and convert it to list.
 
-    If story_id is None, give back the whole list.
+    If 'story_id' is None, give back the whole list.
     Else read only the row with the given ID.
 
-    Convert all escaped newlines to display it properly.
+    Convert all escaped newlines to display it properly in the table or in a textarea.
     """
     with open("app/data.csv") as f:
         data = []
@@ -38,10 +38,10 @@ def read_data(story_id=None):
 def write_data(new_data, story_id=None, delete=False):
     """Store data into the data.csv file.
 
-    If story_id is None, append the new_data to the end of the table.
+    If 'story_id' is None, append the new_data to the end of the table.
     Else update only the row with the given ID.
 
-    If delete is True, delete the row with the given ID.
+    If 'delete' is True, delete the row with the given ID.
     """
     new_data = fix_newline(new_data)
     data = read_data()
@@ -75,7 +75,7 @@ def write_data(new_data, story_id=None, delete=False):
 
 
 def fix_newline(data):
-    """Convert newlines and line breaks back to escaped newline in the given string or list of strings."""
+    """Convert newline and line break back to escaped newline in the given string or list of strings."""
     fixed_data = []
     if isinstance(data, (list)):
         for line in data:
