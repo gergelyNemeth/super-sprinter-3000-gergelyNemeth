@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {% if not data[0] %}
-            <title>Super Sprinter 3000 - Add New Story</title>
-        {% else %}
-            <title>Super Sprinter 3000 - Edit Story</title>
-        {% endif %}
+        <title>Super Sprinter 3000 - {{ page_title }}</title>
     </head>
     <body>
+        <h2>User Story Manager - {{ page_title }}</h2>
 
     {% if not data[0] %}
-        <h2>User Story Manager - Add New Story</h2>
         <form action="{{ url_for('story') }}" method="post" role="form">
     {% else %}
-        <h2>User Story Manager - Edit Story</h2>
         <form action="{{ url_for('story', story_id=story_id) }}" method="post" role="form">
     {% endif %}
 
@@ -27,7 +22,7 @@
             <textarea rows="4" cols="47" name="acceptance_criteria" id="acceptance_criteria">{{ data[3] }}</textarea><br><br>
 
             <label for="business_value">Business Value</label><br>
-            <select name="business_value" id="business_value" value=" {{ data[4] }}">
+            <select name="business_value" id="business_value" value="{{ data[4] }}">
             {% for i in range(100, 1600, 100) %}
                 {% if i == int(data[4]) %}
                     <option selected value="{{ i }}">{{ i }}</option>

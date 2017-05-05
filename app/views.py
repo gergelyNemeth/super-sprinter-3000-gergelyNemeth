@@ -122,10 +122,12 @@ def story(story_id=None):
     status_list = ["Planning", "TODO", "In Progress", "Review", "Done"]
     if story_id:
         data = read_data(story_id)
+        page_title = "Edit Story"
     else:
         data = [0, "", "", "", "0", "0h", ""]
+        page_title = "Add New Story"
     return render_template('form.html', story_id=story_id, status_list=status_list,
-                           data=data, int=int, float=float)
+                           data=data, page_title=page_title, int=int, float=float)
 
 
 @app.route('/story/<story_id>/delete')
